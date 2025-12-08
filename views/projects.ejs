@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="luxury">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+    <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body>
+    
+    <!-- Navbar -->
+    <%- include('partials/navbar') %>
+
+  <div class="container mx-auto">
+    <div class="hero bg-base-200 rounded-lg p-6">
+      <div class="hero-content text-center ">
+        <div class="max-w-md">
+          <div class="flex items-center justify-between mb-6" style="max-width: 600px; margin: 0 auto;">
+            <h1 style="margin-left: 141px;" class="text-5xl font-bold text-center flex-1">Projects</h1>
+            <a style="margin-left: 70px;" href="/solutions/addProject" class="btn btn-success ml-4">Add New Project</a>
+          </div>
+  
+            <div style="font-size: larger;">
+              <p class="py-6">Walkthrough all the projects of your interest. Click any of the following buttons to filter by sector:
+              <br><br>
+              <a href="/solutions/projects?sector=land" class="btn btn-primary btn-sm">Land Sinks</a>&nbsp;&nbsp;
+              <a href="/solutions/projects?sector=ind" class="btn btn-primary btn-sm">Industry</a>&nbsp;&nbsp;
+              <a href="/solutions/projects?sector=transportation" class="btn btn-primary btn-sm">Transportation</a>&nbsp;&nbsp;
+              <a href="/solutions/projects?sector=electricity" class="btn btn-primary btn-sm">Electricity</a> </p>&nbsp;&nbsp;
+              <a href="/solutions/projects?sector=food" class="btn btn-primary btn-sm ">Food, Agriculture & Land Use</a> </p>&nbsp;&nbsp;
+            </div>
+            
+  
+          </div>
+      </div>
+    </div>
+
+    <table class="table table-zebra">
+
+    <% projects.forEach(project=>{ %>
+      <tr>
+
+        <td> <span class="font-bold"><%= project.title %></span> </td>
+        <td><a class="btn mt-2 btn-xs w-50" href="/solutions/projects?sector=<%= project.Sector.sector_name %>"><%= project.Sector.sector_name %></a></td>
+        <td><%= project.summary_short %></td>
+        <th><a class="btn btn-xs" href="/solutions/projects/<%= project.id %>">Details</a></th>
+
+      </tr>
+    <% }) %>
+
+
+    </table>
+    <br>
+
+  </div>
+
+
+</body>
+</html>

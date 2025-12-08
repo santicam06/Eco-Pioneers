@@ -1,0 +1,27 @@
+{
+  "name": "assignment2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "tw:build": "npx @tailwindcss/cli -i ./public/css/tailwind.css -o ./public/css/main.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Santiago Camacho Moyano",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "pg": "^8.16.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.17",
+    "@tailwindcss/typography": "^0.5.19",
+    "daisyui": "^5.4.7",
+    "tailwindcss": "^4.1.17"
+  }
+}

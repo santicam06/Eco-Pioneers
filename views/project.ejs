@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="luxury">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+    <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body>
+    
+    <!-- Navbar -->
+    <%- include('partials/navbar') %>
+
+    <div class="container mx-auto">
+
+        <div class="hero bg-base-200 rounded-lg p-6">
+          <div class="hero-content text-center ">
+            <div class="max-w-md">
+              <h1 class="text-5xl font-bold"><%= project.title %></h1>
+
+              <p class="py-6">The following is a detailed information about the project: <%= project.title %>.</p>
+            </div>
+          </div>
+        </div>
+
+    <br>
+
+    <!-- Grid System -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <img class="w-full rounded-lg" src="<%= project.feature_img_url %>"   alt="profile">
+      </div>
+      
+      <div class="prose">
+        <h3>Summary</h3>
+        <p><%= project.intro_short %></p>
+
+        <h3>Impact</h3>
+        <p><%= project.impact %></p>
+
+        <h4>More information: <a href="<%= project.original_source_url %>" class="break-words"><%= project.feature_img_url %></a></h4>
+
+        <script>
+
+            document.addEventListener("DOMContentLoaded", ()=>{
+
+                fetch('https://dummyjson.com/quotes/random')
+                    .then((response) => {
+                      return response.ok ? response.json() : Promise.reject(response.status);
+                    })
+                    .then((json) => {
+                      document.getElementById("quote").textContent = json.quote;
+                      document.getElementById("author").textContent = json.author;
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+             });
+
+        </script>
+        <br>
+        "<span id="quote"></span>"
+       <br>
+        - <em style="font-weight: bolder;" id="author"></em>
+
+        <br><br>
+        <a class="btn btn-primary btn-sm" href="#" onclick="history.back(); return false;">RETURN</a>
+        <br><br>
+      </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>
