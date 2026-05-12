@@ -1951,7 +1951,7 @@
     padding-inline: calc(var(--spacing) * 1);
   }
   .py-6 {
-    padding-block: calc(var(--spacing) * 6);
+    padding-block: calc(var(--spacing) * 5);
   }
   .pt-2 {
     padding-top: calc(var(--spacing) * 2);
@@ -1960,6 +1960,7 @@
     text-align: center;
   }
   .text-5xl {
+    padding-left: 35px;
     font-size: var(--text-5xl);
     line-height: var(--tw-leading, var(--text-5xl--line-height));
   }
