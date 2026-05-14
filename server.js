@@ -10,7 +10,7 @@ require('pg');
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
-express.urlencoded({extended:true});
+app.use(express.urlencoded({extended:true}));
 
 app.listen(HTTP_PORT, () => {
   console.log('server listening on: ' + HTTP_PORT);
@@ -81,7 +81,7 @@ app.post('/solutions/addProject', (req, res) => {
       .then(() => {
         res.redirect('/solutions/projects/');
       })
-      .catch(() => {
+      .catch((err) => {
         res.render("500", { message: `We are sorry, an error has occurred: ${err}` });
       });
 });

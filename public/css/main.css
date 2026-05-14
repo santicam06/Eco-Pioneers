@@ -13,6 +13,8 @@
     --text-lg--line-height: calc(1.75 / 1.125);
     --text-xl: 1.25rem;
     --text-xl--line-height: calc(1.75 / 1.25);
+    --text-2xl: 1.5rem;
+    --text-2xl--line-height: calc(2 / 1.5);
     --text-5xl: 3rem;
     --text-5xl--line-height: 1;
     --font-weight-medium: 500;
@@ -1575,9 +1577,6 @@
   .z-1 {
     z-index: 1;
   }
-  .z-\[1\] {
-    z-index: 1;
-  }
   .hero {
     @layer daisyui.component {
       display: grid;
@@ -1659,9 +1658,6 @@
   }
   .my-2 {
     margin-block: calc(var(--spacing) * 2);
-  }
-  .my-4 {
-    margin-block: calc(var(--spacing) * 4);
   }
   .prose {
     color: var(--tw-prose-body);
@@ -2078,53 +2074,20 @@
       margin-bottom: 0;
     }
   }
-  .mt-1 {
-    margin-top: calc(var(--spacing) * 1);
-  }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
   .mt-3 {
     margin-top: calc(var(--spacing) * 3);
   }
-  .mt-4 {
-    margin-top: calc(var(--spacing) * 4);
-  }
-  .mt-6 {
-    margin-top: calc(var(--spacing) * 6);
-  }
-  .mt-7 {
-    margin-top: calc(var(--spacing) * 7);
-  }
   .mt-auto {
     margin-top: auto;
-  }
-  .mb-0 {
-    margin-bottom: calc(var(--spacing) * 0);
-  }
-  .mb-0\.5 {
-    margin-bottom: calc(var(--spacing) * 0.5);
   }
   .mb-1 {
     margin-bottom: calc(var(--spacing) * 1);
   }
-  .mb-2 {
-    margin-bottom: calc(var(--spacing) * 2);
-  }
   .mb-3 {
     margin-bottom: calc(var(--spacing) * 3);
-  }
-  .mb-4 {
-    margin-bottom: calc(var(--spacing) * 4);
-  }
-  .mb-6 {
-    margin-bottom: calc(var(--spacing) * 6);
-  }
-  .mb-7 {
-    margin-bottom: calc(var(--spacing) * 7);
-  }
-  .ml-4 {
-    margin-left: calc(var(--spacing) * 4);
   }
   .badge {
     @layer daisyui.component {
@@ -2332,14 +2295,8 @@
   .flex-wrap {
     flex-wrap: wrap;
   }
-  .items-center {
-    align-items: center;
-  }
   .items-end {
     align-items: flex-end;
-  }
-  .justify-between {
-    justify-content: space-between;
   }
   .justify-center {
     justify-content: center;
@@ -2350,20 +2307,11 @@
   .gap-2 {
     gap: calc(var(--spacing) * 2);
   }
-  .gap-4 {
-    gap: calc(var(--spacing) * 4);
-  }
   .gap-6 {
     gap: calc(var(--spacing) * 6);
   }
-  .gap-10 {
-    gap: calc(var(--spacing) * 10);
-  }
   .gap-15 {
     gap: calc(var(--spacing) * 15);
-  }
-  .gap-y-0 {
-    row-gap: calc(var(--spacing) * 0);
   }
   .menu-sm {
     @layer daisyui.modifier {
@@ -2395,6 +2343,14 @@
   .border-t {
     border-top-style: var(--tw-border-style);
     border-top-width: 1px;
+  }
+  .badge-ghost {
+    @layer daisyui.modifier {
+      border-color: var(--color-base-200);
+      background-color: var(--color-base-200);
+      color: var(--color-base-content);
+      background-image: none;
+    }
   }
   .table-zebra {
     @layer daisyui.modifier {
@@ -2428,17 +2384,11 @@
   .object-cover {
     object-fit: cover;
   }
-  .p-0 {
-    padding: calc(var(--spacing) * 0);
-  }
   .p-1 {
     padding: calc(var(--spacing) * 1);
   }
   .p-2 {
     padding: calc(var(--spacing) * 2);
-  }
-  .p-4 {
-    padding: calc(var(--spacing) * 4);
   }
   .p-6 {
     padding: calc(var(--spacing) * 6);
@@ -2458,14 +2408,8 @@
   .px-1 {
     padding-inline: calc(var(--spacing) * 1);
   }
-  .px-6 {
-    padding-inline: calc(var(--spacing) * 6);
-  }
   .px-10 {
     padding-inline: calc(var(--spacing) * 10);
-  }
-  .py-3 {
-    padding-block: calc(var(--spacing) * 3);
   }
   .py-4 {
     padding-block: calc(var(--spacing) * 4);
@@ -2479,20 +2423,27 @@
   .pt-2 {
     padding-top: calc(var(--spacing) * 2);
   }
+  .pt-4 {
+    padding-top: calc(var(--spacing) * 4);
+  }
+  .pt-5 {
+    padding-top: calc(var(--spacing) * 5);
+  }
   .pt-6 {
     padding-top: calc(var(--spacing) * 6);
   }
-  .pb-1 {
-    padding-bottom: calc(var(--spacing) * 1);
+  .pt-7 {
+    padding-top: calc(var(--spacing) * 7);
   }
   .pb-2 {
     padding-bottom: calc(var(--spacing) * 2);
   }
-  .pb-3 {
-    padding-bottom: calc(var(--spacing) * 3);
-  }
   .text-center {
     text-align: center;
+  }
+  .text-2xl {
+    font-size: var(--text-2xl);
+    line-height: var(--tw-leading, var(--text-2xl--line-height));
   }
   .text-5xl {
     font-size: var(--text-5xl);

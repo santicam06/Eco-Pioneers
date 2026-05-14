@@ -31,10 +31,10 @@
               </div>
       
                 <div class="text-lg">
-                  <p class="py-6">Walkthrough all the projects of your interest. Click any of the following buttons to filter by sector:</p>
+                  <p class="py-6 pt-5 text-lg">Walkthrough all the projects of your interest. Click any of the following buttons to filter by sector:</p>
                   <div class="flex flex-wrap gap-2 justify-center">
-                    <a href="/solutions/projects?sector=land" class="btn btn-primary btn-sm">Land Sinks</a>
-                    <a href="/solutions/projects?sector=ind" class="btn btn-primary btn-sm">Industry</a>
+                    <a href="/solutions/projects?sector=Land Sinks" class="btn btn-primary btn-sm">Land Sinks</a>
+                    <a href="/solutions/projects?sector=industry" class="btn btn-primary btn-sm">Industry</a>
                     <a href="/solutions/projects?sector=transportation" class="btn btn-primary btn-sm">Transportation</a>
                     <a href="/solutions/projects?sector=electricity" class="btn btn-primary btn-sm">Electricity</a>
                     <a href="/solutions/projects?sector=food" class="btn btn-primary btn-sm">Food, Agriculture & Land Use</a>
@@ -50,19 +50,22 @@
       <tr>
 
         <td> <span class="font-bold"><%= project.title %></span> </td>
-        <td><a class="btn mt-2 btn-xs w-50" href="/solutions/projects?sector=<%= project.Sector.sector_name %>"><%= project.Sector.sector_name %></a></td>
+        <td>
+          <% if (project.Sector) { %>
+            <a class="btn mt-2 btn-xs w-50" href="/solutions/projects?sector=<%= project.Sector.sector_name %>"><%= project.Sector.sector_name %></a>
+          <% } else { %>
+            <span class="badge badge-ghost">N/A</span>
+          <% } %>
+        </td>
         <td><%= project.summary_short %></td>
         <th><a class="btn btn-xs" href="/solutions/projects/<%= project.id %>">Details</a></th>
 
       </tr>
     <% }) %>
 
-
     </table>
     <br>
 
   </div>
-
-
 </body>
 </html>
