@@ -1,16 +1,3 @@
-/********************************************************************************
-* WEB322 – Assignment 03
-*
-* I declare that this assignment is my own work in accordance with Seneca's
-* Academic Integrity Policy:
-*
-* https://www.senecapolytechnic.ca/about/policies/academic-integrity-policy.html
-*
-* Name: Santiago Camacho Moyano Student ID: 128242245 Date: 07 December 2025
-*
-* Published URL: https://assingment3-web322.vercel.app/ 
-
-********************************************************************************/
 
 const express = require('express'); 
 const app = express(); 
@@ -36,7 +23,17 @@ projectData.initialize()
 
 
 app.get('/', (req, res) => {
-   res.render('home');
+  projectData.getAllProjects()
+    .then((projects) => {
+      // Create a copy of the array and shuffle it
+      const shuffled = [...projects].sort(() => 0.5 - Math.random());
+      // Pick the first 3 projects from the shuffled list
+      const randomProjects = shuffled.slice(0, 3);
+      res.render('home', { projects: randomProjects });
+    })
+    .catch((err) => {
+      res.status(500).render("500", { message: `Unable to load featured projects: ${err}` });
+    });
 });
 
 

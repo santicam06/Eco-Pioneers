@@ -3,3 +3,19 @@
 @plugin "daisyui" {
   themes: luxury;
 }
+
+@layer components {
+  .input, .select, .textarea {
+    border-width: 2px !important;
+  }
+
+  /* Standardizes the main content area of every page */
+  .page-container {
+    @apply container mx-auto px-4 pt-4 pb-8;
+  }
+
+  /* Standardizes the hero section (header) on every page */
+  .standard-hero {
+    @apply hero bg-base-200 rounded-lg p-6 mb-8;
+  }
+}

@@ -2,6 +2,7 @@ require('dotenv').config();
 require('pg');
 const Sequelize = require('sequelize');
 
+
 let sequelize = new Sequelize(process.env.PGDATABASE, process.env.PGUSER, process.env.PGPASSWORD, {
   host: process.env.PGHOST,
   dialect: 'postgres',
@@ -20,6 +21,21 @@ sequelize.authenticate()
 });
 
 
+const Sector = sequelize.define('Sector', {
+  id: { 
+    type: Sequelize.INTEGER, 
+    primaryKey: true, 
+    autoIncrement: true
+  },
+  sector_name: Sequelize.STRING,
+},
+ {
+    createdAt: false, 
+    updatedAt: false 
+ }
+);
+
+
 const Project = sequelize.define('Project', {
 
   id: { 
@@ -36,24 +52,11 @@ const Project = sequelize.define('Project', {
   original_source_url: Sequelize.STRING,
 },
 {
-    createdAt: false, // disable createdAt
-    updatedAt: false, // disable updatedAt
+    createdAt: false, 
+    updatedAt: false,
 }
 );
 
-const Sector = sequelize.define('Sector', {
-  id: { 
-    type: Sequelize.INTEGER, 
-    primaryKey: true, 
-    autoIncrement: true
-  },
-  sector_name: Sequelize.STRING,
-},
- {
-    createdAt: false, // disable createdAt
-    updatedAt: false // disable updatedAt
- }
-);
 
 Project.belongsTo(Sector, {foreignKey: 'sector_id'});
 
@@ -76,7 +79,7 @@ function getAllProjects() {
     return new Promise((resolve, reject) => {
 
         Project.findAll({
-            include: Sector
+            include: [Sector],
         })
         .then((projects) => {
             resolve(projects); // <-- resolve with all projects
@@ -92,14 +95,14 @@ function getProjectById(projectID) {
     
     return new Promise((resolve, reject) => {
         Project.findAll({
-            include: Sector,
+            include: [Sector],
             where: { id: projectID }
         })
         .then((projects) => {
             if (projects.length > 0) {
                 resolve(projects[0]);
             } else {
-                reject("Unable to find requested project");
+                reject("Unable to find requested project.");
             }
         })
         .catch((err) => {
@@ -112,16 +115,31 @@ function getProjectById(projectID) {
 function getProjectsBySector(sectorPhr) {
 
     return new Promise((resolve, reject) => {
-        
+
+        // ensure sectorPhr is a string
+        if (sectorPhr == null) {               
+          sectorPhr = '';
+        } else if (typeof sectorPhr !== 'string') {
+          sectorPhr = String(sectorPhr);
+        }
+
+        // then trim / limit length / escape wildcards
+        sectorPhr = sectorPhr.trim().slice(0, 200);
+        const safePhr = sectorPhr.replace(/([\\%_])/g, m => '\\' + m);
+
         Project.findAll({
-            include: Sector,
+            include: [Sector],
             where: { '$Sector.sector_name$': {
-                [Sequelize.Op.iLike]: `%${sectorPhr}%`} 
+                [Sequelize.Op.iLike]: `%${safePhr.trim()}%`} 
             }
         })
         .then((projects) => {
           
-            resolve(projects);
+            if (projects.length > 0) {
+                resolve(projects);
+            } else {
+                reject("Unable to find requested project(s) with this phrase.");
+            }
         })
         .catch((err) => {
             reject("Unable to find requested project: " + err);
@@ -148,13 +166,5 @@ function addProject(projectData) {
 module.exports = { initialize, getAllProjects, getProjectById, getProjectsBySector, addProject }
 
 
-/* module.exports usage: 
 
-* This line is used in Node.js to export functions from the current module (file) so they can be used in other files.
 
-* It creates an object with four properties: initialize, getAllProjects, getProjectById, and getProjectsBySector.
-
-* Each property references a function defined in this file with the same name.
-
-* When another file uses require('./modules/projects'), it will get an object with these four functions, allowing that file to call them.
-*/

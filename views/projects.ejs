@@ -11,31 +11,40 @@
     <!-- Navbar -->
     <%- include('partials/navbar') %>
 
-  <div class="container mx-auto">
-    <div class="hero bg-base-200 rounded-lg p-6">
-      <div class="hero-content text-center ">
-        <div class="max-w-md">
-          <div class="flex items-center justify-between mb-6" style="max-width: 600px; margin: 0 auto;">
-            <h1 style="margin-left: 141px;" class="text-5xl font-bold text-center flex-1">Projects</h1>
-            <a style="margin-left: 70px;" href="/solutions/addProject" class="btn btn-success ml-4">Add New Project</a>
-          </div>
-  
-            <div style="font-size: larger;">
-              <p class="py-6">Walkthrough all the projects of your interest. Click any of the following buttons to filter by sector:
-              <br><br>
-              <a href="/solutions/projects?sector=land" class="btn btn-primary btn-sm">Land Sinks</a>&nbsp;&nbsp;
-              <a href="/solutions/projects?sector=ind" class="btn btn-primary btn-sm">Industry</a>&nbsp;&nbsp;
-              <a href="/solutions/projects?sector=transportation" class="btn btn-primary btn-sm">Transportation</a>&nbsp;&nbsp;
-              <a href="/solutions/projects?sector=electricity" class="btn btn-primary btn-sm">Electricity</a> </p>&nbsp;&nbsp;
-              <a href="/solutions/projects?sector=food" class="btn btn-primary btn-sm ">Food, Agriculture & Land Use</a> </p>&nbsp;&nbsp;
-            </div>
-            
-  
-          </div>
-      </div>
-    </div>
+    <div class="page-container">
+        <!-- Header -->
+        <div class="standard-hero">
+          <div class="hero-content text-center ">
+            <div class="max-w-full">
+              <div class="flex flex-col md:flex-row items-end justify-center gap-15 mb-3">
 
-    <table class="table table-zebra">
+                <!-- Invisible Spacer (Balances the button on the left so Title stays centered) -->
+                <div class="invisible pointer-events-none hidden md:block">
+                    <div class="btn btn-success mb-1">Add New Project</div>
+                </div>
+
+                <h1 class="text-5xl font-bold">Projects</h1>
+
+                <!-- Real Button -->
+                <a href="/solutions/addProject" class="btn btn-success mb-1">Add New Project</a>
+
+              </div>
+      
+                <div class="text-lg">
+                  <p class="py-6">Walkthrough all the projects of your interest. Click any of the following buttons to filter by sector:</p>
+                  <div class="flex flex-wrap gap-2 justify-center">
+                    <a href="/solutions/projects?sector=land" class="btn btn-primary btn-sm">Land Sinks</a>
+                    <a href="/solutions/projects?sector=ind" class="btn btn-primary btn-sm">Industry</a>
+                    <a href="/solutions/projects?sector=transportation" class="btn btn-primary btn-sm">Transportation</a>
+                    <a href="/solutions/projects?sector=electricity" class="btn btn-primary btn-sm">Electricity</a>
+                    <a href="/solutions/projects?sector=food" class="btn btn-primary btn-sm">Food, Agriculture & Land Use</a>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <table class="table table-zebra">
 
     <% projects.forEach(project=>{ %>
       <tr>

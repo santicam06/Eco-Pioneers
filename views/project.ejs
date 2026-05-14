@@ -11,19 +11,16 @@
     <!-- Navbar -->
     <%- include('partials/navbar') %>
 
-    <div class="container mx-auto">
-
-        <div class="hero bg-base-200 rounded-lg p-6">
+    <div class="page-container">
+        <!-- Header -->
+        <div class="standard-hero">
           <div class="hero-content text-center ">
             <div class="max-w-md">
               <h1 class="text-5xl font-bold"><%= project.title %></h1>
-
-              <p class="py-6">The following is a detailed information about the project: <%= project.title %>.</p>
+              <p class="py-6 text-lg">Detailed information about the project: <%= project.title %>.</p>
             </div>
           </div>
         </div>
-
-    <br>
 
     <!-- Grid System -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
