@@ -35,9 +35,11 @@
         </div>
       </div>
 
-      <div class="flex flex-row justify-center items-center">
-        <a href="/solutions/addProject" class="btn btn-success btn-md m-2">ADD NEW PROJECT</a>
-      </div>
+      <% if(session.user){ %>
+        <div class="flex flex-row justify-center items-center">
+          <a href="/solutions/addProject" class="btn btn-success btn-md m-2">ADD NEW PROJECT</a>
+        </div>
+      <% } %>
 
       <table class="table table-pin-rows">
         <thead>

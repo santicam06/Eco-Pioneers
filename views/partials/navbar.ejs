@@ -1,51 +1,64 @@
 <div class="navbar bg-base-100">
-    <div class="flex-1">
-      <a class="btn btn-ghost normal-case text-xl" href="/">The Earth needs us!</a>
-    </div>
-
-    <!-- For mobile phones whose dimensions reach the sm breakpoint, displays hamburguer dropdown -->
-    <div class="dropdown">
-      <label tabindex="0" class="btn btn-ghost sm:hidden">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-        </svg>
-      </label>
-      <ul tabindex="0" class="menu menu-sm dropdown-content right-0 mt-3 z-1 p-2 shadow bg-base-100 rounded-box w-52">
-        <li><a class="active text-xl" href="/about">About</a></li>
-        <li>
-          <details>
-            <summary class="text-xl">
-              Sector
-            </summary>
-            <li><a href="/solutions/projects?sector=Land Sinks">Land Sinks</a></li>
-            <li><a href="/solutions/projects?sector=Industry">Industry</a></li>
-            <li><a href="/solutions/projects?sector=Transportation">Transportation</a></li>
-            <li><a href="/solutions/projects?sector=Electricity">Electricity</a></li>
-            <li><a href="/solutions/projects?sector=Food, Agriculture, and Land Use">Food, Agriculture, and Land Use</a></li>
-            <li class="border-t mt-2 pt-2"><a href="/solutions/projects">View All</a></li>
-
-            </ul>
-            </details>
-            </li>
-            </ul>
-            </div>
-
-            <div class="navbar-center hidden sm:flex">
-            <ul class="menu menu-horizontal px-1">
-            <li><a class="active text-xl" href="/about">About</a></li>
-            <li>
-            <details>
-            <summary class="text-xl">Sector</summary>
-            <ul class="p-2 bg-base-100 right-0">
-            <li><a href="/solutions/projects?sector=Land Sinks">Land Sinks</a></li>
-            <li><a href="/solutions/projects?sector=Industry">Industry</a></li>
-            <li><a href="/solutions/projects?sector=Transportation">Transportation</a></li>
-            <li><a href="/solutions/projects?sector=Electricity">Electricity</a></li>
-            <li><a href="/solutions/projects?sector=Food, Agriculture, and Land Use">Food, Agriculture, and Land Use</a></li>
-            <li class="border-t mt-2 pt-2"><a href="/solutions/projects">View All</a></li>
-            </ul>
-            </details>
-            </li>
-            </ul>      </ul>
-    </div>
+  <div class="flex-1">
+    <a class="btn btn-ghost normal-case text-xl" href="/">Eco Pioneers</a>
   </div>
+
+  <!-- For mobile phones whose dimensions reach the sm breakpoint, displays hamburguer dropdown -->
+  <div class="dropdown dropdown-end sm:hidden">
+    <label tabindex="0" class="btn btn-ghost">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+      </svg>
+    </label>
+    <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+      <li><a class="active text-xl" href="/about">About</a></li>
+      <li>
+        <details>
+          <summary class="text-xl">Sector</summary>
+          <ul>
+            <li><a href="/solutions/projects?sector=Land Sinks">Land Sinks</a></li>
+            <li><a href="/solutions/projects?sector=Industry">Industry</a></li>
+            <li><a href="/solutions/projects?sector=Transportation">Transportation</a></li>
+            <li><a href="/solutions/projects?sector=Electricity">Electricity</a></li>
+            <li><a href="/solutions/projects?sector=Food, Agriculture, and Land Use">Food, Agriculture, and Land Use</a></li>
+            <li class="border-t mt-2 pt-2"><a href="/solutions/projects">View All</a></li>
+          </ul>
+        </details>
+      </li>
+      <% if (session.user) { %>
+        <li class="border-t mt-2 pt-2"><span class="text-xl text-success font-normal"><%= session.user.userName %></span></li>
+        <li><a href="/logout" class="btn btn-warning btn-sm mt-2 text-white">Logout</a></li>
+      <% } else { %>
+        <li class="border-t mt-2 pt-2"><a href="/login">Login</a></li>
+      <% } %>
+    </ul>
+  </div>
+
+  <div class="navbar-center hidden sm:flex">
+
+    <!-- Use a menu with a defined gap to manage all items consistently -->
+    <ul class="menu menu-horizontal px-1 items-center gap-x-1">
+      <li><a class="active text-xl" href="/about">About</a></li>
+      <li>
+        <details>
+          <summary class="text-xl">Sector</summary>
+          <ul class="p-2 bg-base-100 right-0 z-[1] shadow-lg min-w-[200px]">
+            <li><a href="/solutions/projects?sector=Land Sinks">Land Sinks</a></li>
+            <li><a href="/solutions/projects?sector=Industry">Industry</a></li>
+            <li><a href="/solutions/projects?sector=Transportation">Transportation</a></li>
+            <li><a href="/solutions/projects?sector=Electricity">Electricity</a></li>
+            <li><a href="/solutions/projects?sector=Food, Agriculture, and Land Use">Food, Agriculture, and Land Use</a></li>
+            <li class="border-t mt-2 pt-2"><a href="/solutions/projects">View All</a></li>
+          </ul>
+        </details>
+      </li>
+      <% if (session.user) { %>
+        <li><span class="text-xl text-success font-normal cursor-default mr-2 px-3"><%= session.user.userName %></span></li>
+        <li><a href="/logout" class="btn bg-red-700 hover:bg-red-800 mr-1 border-none btn-sm text-white p-0 flex items-center justify-center h-8 px-3">Logout</a></li>
+      <% } else { %>
+        <li><a href="/login" class="text-xl">Login</a></li>
+      <% } %>
+    </ul>
+
+  </div>
+</div>

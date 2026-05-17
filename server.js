@@ -1,3 +1,5 @@
+require('dotenv').config();
+require('pg'); 
 
 const express = require('express'); 
 const app = express(); 
@@ -6,9 +8,11 @@ const path = require('path');
 const projectData = require("./modules/projects");
 const Sequelize = require('sequelize');
 const clientSessions = require('client-sessions');
-const { ensureLogin } = require('./middleware/auth');
+const { ensureLogin, ensureAdmin } = require('./middleware/auth');
+const bcrypt = require('bcryptjs');
 
-require('pg'); 
+const { User } = projectData;
+
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
@@ -23,6 +27,7 @@ app.use(
   })
 );
 
+// Maintains the current sessions for all views, avoids manually sending the session obj
 app.use((req, res, next) => {
   res.locals.session = req.session;
   next();
@@ -55,8 +60,44 @@ app.get('/', (req, res) => {
 });
 
 
+app.get('/logout', (req, res) => {
+  req.session.reset();
+  res.redirect('/');
+});
+
 app.get('/about', (req, res) => {
    res.render('about');
+});
+
+
+app.get('/login', (req, res) => {
+  
+  if (req.session.user) 
+    res.redirect('/solutions/projects');
+  else 
+    res.render('login', { errorMessage: "", userName: "" });
+});
+
+
+app.post('/login', (req, res) => {
+  const { userName, password } = req.body;
+
+  // Look into the model for authorized user
+  User.findOne({ where: { userName: userName } })
+    .then((user) => {
+      if (user && bcrypt.compareSync(password, user.password)) {
+        req.session.user = {
+          userName: user.userName,
+          role: user.role
+        };
+        res.redirect('/solutions/projects');
+      } else {
+        res.render('login', { errorMessage: "Invalid User Name or Password", userName: userName });
+      }
+    })
+    .catch((err) => {
+      res.render('login', { errorMessage: "An error occurred during login. Please try again.", userName: userName });
+    });
 });
 
 
@@ -68,6 +109,7 @@ app.get('/solutions/projects/:id', (req, res) => {
       res.status(404).render("404", { message: err });
     });
 });
+
 
 app.get('/solutions/projects/', (req, res) => {
   if (req.query.sector) {
@@ -89,11 +131,13 @@ app.get('/solutions/projects/', (req, res) => {
   }
 });
 
-app.get('/solutions/addProject', ensureLogin, (req, res) => {
+
+app.get('/solutions/addProject', ensureLogin, ensureAdmin, (req, res) => {
   res.render('addProject');
 });
 
-app.post('/solutions/addProject', ensureLogin, (req, res) => {
+
+app.post('/solutions/addProject', ensureLogin, ensureAdmin, (req, res) => {
 
   projectData.addProject(req.body)
     .then(() => {
@@ -105,7 +149,7 @@ app.post('/solutions/addProject', ensureLogin, (req, res) => {
 });
 
 
-app.get('/solutions/editProject/:id', ensureLogin, (req, res) => {
+app.get('/solutions/editProject/:id', ensureLogin, ensureAdmin, (req, res) => {
 
   projectData.getProjectById(req.params.id)
     .then(project => res.render("editProject", { project: project }))
@@ -114,7 +158,8 @@ app.get('/solutions/editProject/:id', ensureLogin, (req, res) => {
     });
 });
 
-app.post('/solutions/editProject', ensureLogin, (req, res) => {
+
+app.post('/solutions/editProject', ensureLogin, ensureAdmin, (req, res) => {
 
     projectData.editProject(req.body.id, req.body)
       .then(() => {
@@ -126,7 +171,7 @@ app.post('/solutions/editProject', ensureLogin, (req, res) => {
 });
 
 
-app.post('/solutions/deleteProject/:id', ensureLogin, (req, res) => {
+app.post('/solutions/deleteProject/:id', ensureLogin, ensureAdmin, (req, res) => {
 
   projectData.deleteProject(req.params.id)
     .then(() => res.redirect("/solutions/projects/"))
@@ -134,47 +179,6 @@ app.post('/solutions/deleteProject/:id', ensureLogin, (req, res) => {
         res.render("500", { message: `We are sorry, an error has occurred: ${err}` });
     });
 });
-
-
-
-/*
-  app.get('/solutions/projects', (req, res) => {
-    console.log("\n/////////////////// TESTING  getAllProjects() /////////////////////\n")
-    projectData.getAllProjects()
-      .then(projectsArr => res.send(projectsArr))
-  
-      .catch((errText) => {
-      console.log(errText);
-    });
-  });
-  
-  
-  app.get('/solutions/projects/id-demo', (req, res) => {
-    console.log("\n/////////////////// TESTING  getProjectById() /////////////////////\n")
-    projectData.getProjectById(24)
-      .then(data => res.send(data))
-  
-      .catch((errText) => {
-      res.send(errText);
-      });
-  });
-  
-  
-  
-  app.get('/solutions/projects/sector-demo', (req, res) => {
-  
-  console.log("\n/////////////////// TESTING  getProjectsBySector() /////////////////////\n")
-  projectData.getProjectsBySector("portation")
-       .then((data) => {
-      res.send(data);
-    })
-  
-    .catch((errText) => {
-      res.send(errText);
-    });
-  
-  });
-*/
 
 app.use((req, res) => {
   res.status(404).render("404" , {message: 'Oops! It looks like this page does not exist, please check the URL resource.'});

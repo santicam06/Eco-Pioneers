@@ -11,6 +11,7 @@
   "author": "Santiago Camacho Moyano",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "client-sessions": "^0.8.0",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",

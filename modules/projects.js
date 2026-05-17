@@ -57,6 +57,31 @@ const Project = sequelize.define('Project', {
 }
 );
 
+// Model 3: Stores authorized personel to manage the website
+const User = sequelize.define('User', {
+  id: { 
+    type: Sequelize.INTEGER, 
+    primaryKey: true, 
+    autoIncrement: true
+  },
+  userName: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  role: {
+    type: Sequelize.STRING,
+    defaultValue: 'user'
+  }
+}, {
+  createdAt: false,
+  updatedAt: false
+});
+
 
 Project.belongsTo(Sector, {foreignKey: 'sector_id'});
 
@@ -64,7 +89,7 @@ Project.belongsTo(Sector, {foreignKey: 'sector_id'});
 function initialize() {
     return new Promise((resolve, reject) => {
 
-        sequelize.sync()
+        sequelize.sync({alter: true})
             .then(() => {
                 resolve();
             })
@@ -210,7 +235,7 @@ function deleteProject(projectId) {
     });
 }
 
-module.exports = { initialize, getAllProjects, getProjectById, getProjectsBySector, addProject, editProject, deleteProject }
+module.exports = { initialize, getAllProjects, getProjectById, getProjectsBySector, addProject, editProject, deleteProject, User }
 
 
 
