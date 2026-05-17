@@ -13,56 +13,56 @@
 
     <div class="page-container">
         <!-- Header -->
-        <div class="standard-hero">
-          <div class="hero-content text-center ">
-            <div class="max-w-full">
-              <div class="flex flex-col md:flex-row items-end justify-center gap-15 mb-3">
+      <div class="standard-hero mb-3">
+        <div class="hero-content text-center ">
+          <div class="max-w-full">
+              
+            <h1 class="text-5xl font-bold">Projects</h1>
 
-                <!-- Invisible Spacer (Balances the button on the left so Title stays centered) -->
-                <div class="invisible pointer-events-none hidden md:block">
-                    <div class="btn btn-success mb-1">Add New Project</div>
+            <div class="text-lg">
+                <p class="py-6 pt-5 text-lg">Walkthrough all the projects of your interest. Click any of the following buttons to <b>filter</b> by sector:</p>
+                <div class="flex flex-wrap gap-2 justify-center">
+                  <a href="/solutions/projects?sector=Land Sinks" class="btn btn-primary btn-sm">Land Sinks</a>
+                  <a href="/solutions/projects?sector=industry" class="btn btn-primary btn-sm">Industry</a>
+                  <a href="/solutions/projects?sector=transportation" class="btn btn-primary btn-sm">Transportation</a>
+                  <a href="/solutions/projects?sector=electricity" class="btn btn-primary btn-sm">Electricity</a>
+                  <a href="/solutions/projects?sector=food" class="btn btn-primary btn-sm">Food, Agriculture & Land Use</a>
                 </div>
+                
+            </div>
 
-                <h1 class="text-5xl font-bold">Projects</h1>
-
-                <!-- Real Button -->
-                <a href="/solutions/addProject" class="btn btn-success mb-1">Add New Project</a>
-
-              </div>
-      
-                <div class="text-lg">
-                  <p class="py-6 pt-5 text-lg">Walkthrough all the projects of your interest. Click any of the following buttons to filter by sector:</p>
-                  <div class="flex flex-wrap gap-2 justify-center">
-                    <a href="/solutions/projects?sector=Land Sinks" class="btn btn-primary btn-sm">Land Sinks</a>
-                    <a href="/solutions/projects?sector=industry" class="btn btn-primary btn-sm">Industry</a>
-                    <a href="/solutions/projects?sector=transportation" class="btn btn-primary btn-sm">Transportation</a>
-                    <a href="/solutions/projects?sector=electricity" class="btn btn-primary btn-sm">Electricity</a>
-                    <a href="/solutions/projects?sector=food" class="btn btn-primary btn-sm">Food, Agriculture & Land Use</a>
-                  </div>
-                </div>
-              </div>
           </div>
         </div>
+      </div>
 
-        <table class="table table-zebra">
+      <div class="flex flex-row justify-center items-center">
+        <a href="/solutions/addProject" class="btn btn-success btn-md m-2">ADD NEW PROJECT</a>
+      </div>
 
-          <% projects.forEach(project=>{ %>
-            <tr>
+      <table class="table table-pin-rows">
+        <thead>
+          <tr class="text-center">
+            <th class="font-bold text-white">NAME</th>
+            <th class="font-bold text-white">CATEGORY</th>
+            <th class="font-bold text-white">SUMMARY</th>
+          </tr>
+        </thead>
 
-              <td> <span class="font-bold"><%= project.title %></span> </td>
-              <td>
-                <% if (project.Sector) { %>
-                  <a class="btn mt-2 btn-xs w-50" href="/solutions/projects?sector=<%= project.Sector.sector_name %>"><%= project.Sector.sector_name %></a>
-                <% } else { %>
-                  <span class="badge badge-ghost">N/A</span>
-                <% } %>
-              </td>
-              <td><%= project.summary_short %></td>
-              <th><a class="btn btn-xs" href="/solutions/projects/<%= project.id %>">Details</a></th>
-
-            </tr>
-          <% }) %>
-        </table>
+        <% projects.forEach(project=>{ %>
+          <tr>
+            <td> <span class="font-bold"><%= project.title %></span> </td>
+            <td>
+              <% if (project.Sector) { %>
+                <a class="btn mt-2 btn-sm w-50" href="/solutions/projects?sector=<%= project.Sector.sector_name %>"><%= project.Sector.sector_name %></a>
+              <% } else { %>
+                <span class="badge badge-ghost">N/A</span>
+              <% } %>
+            </td>
+            <td><%= project.summary_short %></td>
+            <td><a class="btn btn-info btn-sm" href="/solutions/projects/<%= project.id %>">Details</a></td>
+          </tr>
+        <% }) %>
+      </table>
       <br>
     </div>
   </body>

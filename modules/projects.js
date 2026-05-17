@@ -20,7 +20,7 @@ sequelize.authenticate()
     console.log('Unable to connect to the database:', err);
 });
 
-
+// Model 1
 const Sector = sequelize.define('Sector', {
   id: { 
     type: Sequelize.INTEGER, 
@@ -35,7 +35,7 @@ const Sector = sequelize.define('Sector', {
  }
 );
 
-
+// Model 2
 const Project = sequelize.define('Project', {
 
   id: { 
@@ -157,13 +157,42 @@ function addProject(projectData) {
             resolve();
         })
         .catch((err) => {
-            reject(err.errors[0].message);
+            const errorMessage = err.message || (err.errors ? err.errors[0].message : "An error occurred while adding the project");
+            reject(errorMessage);
         });
     });
 
 }
 
-module.exports = { initialize, getAllProjects, getProjectById, getProjectsBySector, addProject }
+
+function editProject(project_id, projectData) {
+
+    return new Promise((resolve, reject) => {
+        Project.update(
+            {
+                title: projectData.title, 
+                feature_img_url: projectData.feature_img_url,
+                sector_id: projectData.sector_id,
+                intro_short: projectData.intro_short,
+                summary_short: projectData.summary_short,
+                impact: projectData.impact,
+                original_source_url: projectData.original_source_url,
+            },     
+            {where: {id: project_id}},
+        )
+        .then(() => {
+            resolve();
+        })
+        .catch((err) => {
+            const errorMessage = err.message || (err.errors ? err.errors[0].message : "An error occurred while updating the project");
+            reject(errorMessage);
+        });
+    });
+}
+
+
+
+module.exports = { initialize, getAllProjects, getProjectById, getProjectsBySector, addProject, editProject }
 
 
 

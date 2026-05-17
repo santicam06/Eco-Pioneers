@@ -17,7 +17,6 @@
           <div class="hero-content text-center ">
             <div class="max-w-md">
               <h1 class="text-5xl font-bold"><%= project.title %></h1>
-              <p class="py-6 text-lg">Detailed information about the project: <%= project.title %>.</p>
             </div>
           </div>
         </div>
@@ -35,7 +34,7 @@
           <h3>Impact</h3>
           <p><%= project.impact %></p>
 
-          <h4>More information: <a href="<%= project.original_source_url %>" class="break-words"><%= project.feature_img_url %></a></h4>
+          <h4>More information: <a href="<%= project.original_source_url %>" class="wrap-break"><%= project.feature_img_url %></a></h4>
 
           <script>
 
@@ -61,7 +60,9 @@
           - <em style="font-weight: bolder;" id="author"></em>
 
           <br><br>
-          <a class="btn btn-primary btn-sm" href="#" onclick="history.back(); return false;">RETURN</a>
+          <a class="btn btn-primary btn-md" href="#" onclick="history.back(); return false;">RETURN</a>
+          
+          <a href="/solutions/editProject/<%= project.id %>" class="btn btn-info btn-md ml-2 border-0">EDIT PROJECT</a>
           <br><br>
         </div>
       </div>

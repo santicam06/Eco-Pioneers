@@ -12,13 +12,15 @@ app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({extended:true}));
 
-app.listen(HTTP_PORT, () => {
-  console.log('server listening on: ' + HTTP_PORT);
-});
-
+// Server only starts after the database connection is confirmed
 projectData.initialize()
+  .then(() => {
+    app.listen(HTTP_PORT, () => {
+      console.log('server listening on: ' + HTTP_PORT);
+    });
+  })
   .catch((reason) => {
-    console.log(reason);
+    console.log(`Unable to start server: ${reason}`);
   });
 
 
@@ -77,15 +79,35 @@ app.get('/solutions/addProject', (req, res) => {
 
 app.post('/solutions/addProject', (req, res) => {
 
-    projectData.addProject(req.body)
+  projectData.addProject(req.body)
+    .then(() => {
+      res.redirect('/solutions/projects/');
+    })
+    .catch((err) => {
+      res.render("500", { message: `We are sorry, an error has occurred: ${err}` });
+    });
+});
+
+
+app.get('/solutions/editProject/:id', (req, res) => {
+
+  projectData.getProjectById(req.params.id)
+    .then(project => res.render("editProject", { project: project }))
+    .catch((err) => {
+      res.status(404).render("404", { message: err });
+    });
+});
+
+app.post('/solutions/editProject', (req, res) => {
+
+    projectData.editProject(req.body.id, req.body)
       .then(() => {
-        res.redirect('/solutions/projects/');
+        res.redirect(`/solutions/projects/${req.body.id}`);
       })
       .catch((err) => {
         res.render("500", { message: `We are sorry, an error has occurred: ${err}` });
       });
 });
-
 
 
 
