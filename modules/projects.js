@@ -91,12 +91,12 @@ function getAllProjects() {
 }
 
 
-function getProjectById(projectID) {
+function getProjectById(projectId) {
     
     return new Promise((resolve, reject) => {
         Project.findAll({
             include: [Sector],
-            where: { id: projectID }
+            where: { id: projectId }
         })
         .then((projects) => {
             if (projects.length > 0) {
@@ -165,7 +165,7 @@ function addProject(projectData) {
 }
 
 
-function editProject(project_id, projectData) {
+function editProject(projectId, projectData) {
 
     return new Promise((resolve, reject) => {
         Project.update(
@@ -178,7 +178,7 @@ function editProject(project_id, projectData) {
                 impact: projectData.impact,
                 original_source_url: projectData.original_source_url,
             },     
-            {where: {id: project_id}},
+            {where: {id: projectId}},
         )
         .then(() => {
             resolve();
@@ -191,8 +191,26 @@ function editProject(project_id, projectData) {
 }
 
 
+function deleteProject(projectId) {
+    return new Promise((resolve, reject) => {
+        Project.destroy({
+            where: { id: projectId }
+        })
+        .then((rowsDeleted) => {
+            if (rowsDeleted > 0) {
+                resolve();
+            } else {
+                reject("Unable to find project to delete.");
+            }
+        })
+        .catch((err) => {
+            const errorMessage = err.message || (err.errors ? err.errors[0].message : "An error occurred while deleting the project");
+            reject(errorMessage);
+        });
+    });
+}
 
-module.exports = { initialize, getAllProjects, getProjectById, getProjectsBySector, addProject, editProject }
+module.exports = { initialize, getAllProjects, getProjectById, getProjectsBySector, addProject, editProject, deleteProject }
 
 
 

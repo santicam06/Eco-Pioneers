@@ -5,12 +5,28 @@ const HTTP_PORT = process.env.PORT || 8080;
 const path = require('path');
 const projectData = require("./modules/projects");
 const Sequelize = require('sequelize');
- 
+const clientSessions = require('client-sessions');
+const { ensureLogin } = require('./middleware/auth');
+
 require('pg'); 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({extended:true}));
+
+app.use(
+  clientSessions({
+    cookieName: 'session', 
+    secret: process.env.SESSIONSECRET,
+    duration: 3 * 60 * 1000, // duration of the session in milliseconds (3 minutes)
+    activeDuration: 1000 * 60, // the session will be extended by this many ms each request (1 minute)
+  })
+);
+
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
 
 // Server only starts after the database connection is confirmed
 projectData.initialize()
@@ -73,11 +89,11 @@ app.get('/solutions/projects/', (req, res) => {
   }
 });
 
-app.get('/solutions/addProject', (req, res) => {
-   res.render('addProject');
+app.get('/solutions/addProject', ensureLogin, (req, res) => {
+  res.render('addProject');
 });
 
-app.post('/solutions/addProject', (req, res) => {
+app.post('/solutions/addProject', ensureLogin, (req, res) => {
 
   projectData.addProject(req.body)
     .then(() => {
@@ -89,7 +105,7 @@ app.post('/solutions/addProject', (req, res) => {
 });
 
 
-app.get('/solutions/editProject/:id', (req, res) => {
+app.get('/solutions/editProject/:id', ensureLogin, (req, res) => {
 
   projectData.getProjectById(req.params.id)
     .then(project => res.render("editProject", { project: project }))
@@ -98,7 +114,7 @@ app.get('/solutions/editProject/:id', (req, res) => {
     });
 });
 
-app.post('/solutions/editProject', (req, res) => {
+app.post('/solutions/editProject', ensureLogin, (req, res) => {
 
     projectData.editProject(req.body.id, req.body)
       .then(() => {
@@ -107,6 +123,16 @@ app.post('/solutions/editProject', (req, res) => {
       .catch((err) => {
         res.render("500", { message: `We are sorry, an error has occurred: ${err}` });
       });
+});
+
+
+app.post('/solutions/deleteProject/:id', ensureLogin, (req, res) => {
+
+  projectData.deleteProject(req.params.id)
+    .then(() => res.redirect("/solutions/projects/"))
+    .catch((err) => {
+        res.render("500", { message: `We are sorry, an error has occurred: ${err}` });
+    });
 });
 
 
