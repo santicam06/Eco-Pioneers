@@ -1,6 +1,6 @@
 # About Eco Pioneers 🌿
 
-Eco Pioneers is made for one great purpose: Foster our home Earth care by showing the people some of the greatest sustainable solutions ever in order to fight **climate change**.
+Eco Pioneers is made for one great purpose: Foster our home Earth care by showing the people some of the greatest sustainable solutions ever made in order to fight **climate change**.
 
 These proposals are made by the [Project Drawdown](https://drawdown.org/) organization.
 
