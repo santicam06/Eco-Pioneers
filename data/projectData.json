@@ -150,16 +150,6 @@
         "original_source_url": "https://drawdown.org/solutions/improved-cattle-feed"
     },
     {   
-        "id": 16,
-        "sector_id": 1,
-        "title": "Managed Grazing",
-        "feature_img_url": "https://drawdown.org/sites/default/files/solutions/solution_managedgrazing01.jpg",
-        "summary_short": "Managed grazing involves carefully controlling livestock density and timing and intensity of grazing. Compared with conventional pasture practices, it can improve the health of grassland soils, sequestering carbon.",
-        "intro_short": "Livestock grazing covers over 3.3 billion hectares, or 25% of the world’s land, making it the largest land use globally. Poor grazing practices lead to land degradation and soil carbon loss, while managed grazing can improve carbon sequestration and soil health by adjusting grazing intensity, timing, and incorporating rest periods. Project Drawdown's managed grazing solution involves these strategic adjustments to replace conventional grazing methods. Improved grazing can sequester 0.5–3 metric tons of carbon per acre. While methane and nitrous oxide emissions from ruminants persist, they are offset by the increased carbon sequestration until soil carbon saturation is reached.",
-        "impact": "Managed grazing can sequester 13.72-20.92 gigatons of carbon dioxide by 2050. However, this does not reduce the 10 gigatons of methane that are emitted on that grazing land today. To achieve this level of sequestration, adoption of managed grazing practices would need to increase from 71.6 million hectares to 502.1-749.02 million hectares over 30 years. Lifetime net operational savings are US$604.53-935.41 billion on a US$31.73-49.14 billion initial investment.",
-        "original_source_url": "https://drawdown.org/solutions/managed-grazing"
-    },
-    {   
         "id": 17,
         "sector_id": 2,
         "title": "Recycled Metals",
