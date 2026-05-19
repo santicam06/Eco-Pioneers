@@ -18,16 +18,18 @@ app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({extended:true}));
 
+
+// Middleware to manage cookies in HTTP req/res headers, creates req.session obj
 app.use(
   clientSessions({
     cookieName: 'session', 
-    secret: process.env.SESSIONSECRET,
+    secret: process.env.SESSIONSECRET, // used to decrypt the cookie string each time a request departs
     duration: 3 * 60 * 1000, // duration of the session in milliseconds (3 minutes)
     activeDuration: 1000 * 60, // the session will be extended by this many ms each request (1 minute)
   })
 );
 
-// Maintains the current sessions for all views, avoids manually sending the session obj
+// Maintains the current sessions for all views, avoids manually sending the session obj in each view
 app.use((req, res, next) => {
   res.locals.session = req.session;
   next();

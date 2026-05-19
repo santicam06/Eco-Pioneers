@@ -7,6 +7,7 @@
 @layer components {
   .input, .select, .textarea {
     border-width: 2px !important;
+    border-color: color-mix(in oklab, var(--color-base-content) 40%, transparent) !important;
   }
 
   /* Standardizes the main content area of every page */
