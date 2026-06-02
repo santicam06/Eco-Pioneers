@@ -8,6 +8,7 @@ const path = require('path');
 const projectData = require("./modules/projects");
 const Sequelize = require('sequelize');
 const clientSessions = require('client-sessions');
+const methodOverride = require('method-override');
 const { ensureLogin, ensureAdmin } = require('./middleware/auth');
 const bcrypt = require('bcryptjs');
 
@@ -17,6 +18,10 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({extended:true}));
+
+// tells Express to look for a query string named _method in every request
+// Used for PUT and DELETE methods
+app.use(methodOverride('_method'));
 
 
 // Middleware to manage cookies in HTTP req/res headers, creates req.session obj
@@ -86,8 +91,8 @@ app.post('/login', (req, res) => {
 
   // Look into the model for authorized user
   User.findOne({ where: { userName: userName } })
-    .then((user) => {
-      if (user && bcrypt.compareSync(password, user.password)) {
+    .then(async (user) => {
+      if (user && await bcrypt.compare(password, user.password)) {
         req.session.user = {
           userName: user.userName,
           role: user.role
@@ -161,11 +166,11 @@ app.get('/solutions/editProject/:id', ensureLogin, ensureAdmin, (req, res) => {
 });
 
 
-app.post('/solutions/editProject', ensureLogin, ensureAdmin, (req, res) => {
+app.put('/solutions/projects/:id', ensureLogin, ensureAdmin, (req, res) => {
 
-    projectData.editProject(req.body.id, req.body)
+    projectData.editProject(req.params.id, req.body)
       .then(() => {
-        res.redirect(`/solutions/projects/${req.body.id}`);
+        res.redirect(`/solutions/projects/${req.params.id}`);
       })
       .catch((err) => {
         res.render("500", { message: `We are sorry, an error has occurred: ${err}` });
@@ -173,7 +178,7 @@ app.post('/solutions/editProject', ensureLogin, ensureAdmin, (req, res) => {
 });
 
 
-app.post('/solutions/deleteProject/:id', ensureLogin, ensureAdmin, (req, res) => {
+app.delete('/solutions/projects/:id', ensureLogin, ensureAdmin, (req, res) => {
 
   projectData.deleteProject(req.params.id)
     .then(() => res.redirect("/solutions/projects/"))
